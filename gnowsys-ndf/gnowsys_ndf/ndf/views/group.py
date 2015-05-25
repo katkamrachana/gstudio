@@ -185,11 +185,12 @@ def create_group(request,group_id):
     else:
       auth = node_collection.one({'_type': 'Author', 'name': unicode(request.user.username) })
       if auth:
-        group_id = str(auth._id)	
+        group_id = str(auth._id)  
   else :
-  	pass
+    pass
 
   if request.method == "POST":
+    auth = node_collection.one({'_type': 'Author', 'created_by': int(request.user.id)}) 
     colg = node_collection.collection.Group()
     Mod_colg = node_collection.collection.Group()
 
@@ -198,10 +199,13 @@ def create_group(request,group_id):
     colg.name = unicode(cname)
     colg.member_of.append(gst_group._id)
     usrid = int(request.user.id)
-  
     colg.created_by = usrid
     if usrid not in colg.author_set:
       colg.author_set.append(usrid)
+
+    # setting group_admin
+    if usrid not in colg.group_admin:
+      colg.group_admin.append(usrid)
 
     colg.modified_by = usrid
     if usrid not in colg.contributors:
@@ -213,7 +217,7 @@ def create_group(request,group_id):
     colg.visibility_policy = request.POST.get('existance', 'ANNOUNCED')
     colg.disclosure_policy = request.POST.get('member', 'DISCLOSED_TO_MEM')
     colg.encryption_policy = request.POST.get('encryption', 'NOT_ENCRYPTED')
-    colg.agency_type=request.POST.get('agency_type', "")
+    colg.agency_type = request.POST.get('agency_type', "")
     colg.save()
 
     if colg.edit_policy == "EDITABLE_MODERATED":
@@ -235,13 +239,11 @@ def create_group(request,group_id):
       colg.post_node.append(Mod_colg._id)
       colg.save()
 
-    auth = node_collection.one({'_type': 'Author', 'name': unicode(request.user.username) }) 
-
     has_shelf_RT = node_collection.one({'_type': 'RelationType', 'name': u'has_shelf' })
 
     shelves = []
     shelf_list = {}
-    
+
     if auth:
       shelf = triple_collection.find({'_type': 'GRelation', 'subject': ObjectId(auth._id), 'relation_type.$id': has_shelf_RT._id })
 
@@ -250,11 +252,11 @@ def create_group(request,group_id):
           shelf_name = node_collection.one({'_id': ObjectId(each.right_subject)})           
           shelves.append(shelf_name)
 
-          shelf_list[shelf_name.name] = []         
+          shelf_list[shelf_name.name] = []
           for ID in shelf_name.collection_set:
             shelf_item = node_collection.one({'_id': ObjectId(ID) })
             shelf_list[shelf_name.name].append(shelf_item.name)
-                  
+
       else:
         shelves = []
 

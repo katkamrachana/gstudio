@@ -4,43 +4,45 @@
 <link href="/static/ndf/bower_components/jquery-ui/themes/smoothness/jquery-ui.css" rel="stylesheet"> <!-- checked -->
 
 <script type="text/javascript">
-var addata_prefs="";
-var adnot_status="OFF";
-var adinviting_users="";
-
-
-
+var data_prefs="";
+var not_status="OFF";
+var inviting_users="";
 
 $(document).on('click',"#adminchecknotif",function() {
-
-if($('#adminchecknotif').attr('checked')) {
-adnot_status="ON";
-}
-else
-{
-adnot_status="OFF";
-}
+  if($('#adminchecknotif').attr('checked')) {
+    not_status="ON";
+  }
+  else
+  {
+    not_status="OFF";
+  }
 });
 
 
 
-function admininvite(){
-adget_all_data();
-var adinviting_users=addata_prefs;
-addata_prefs=""
-var surl="/{{node}}/group/notify/invite_admins/"
-if (adnot_status=="OFF")
+function invite_user_or_admin(){
+get_all_data();
+var inviting_users = data_prefs;
+data_prefs = ""
+person_type = $(".user_or_admin").val();
+if(person_type == "admins"){
+  var surl = "/{{node}}/group/notify/invite_admins/"
+}
+if(person_type=="users"){
+  var surl = "/{{node}}/group/notify/invite_users/"
+}
+if (not_status=="OFF")
 {
-alert("Notification mails sent to newly selected users(if any)");
+  alert("Notification mails sent to newly selected users(if any)");
 }
 else
 {
-alert("Notification mails sent to all users except group owner");
+  alert("Notification mails sent to all users except group owner");
 }
 $.ajax({
         url: surl,
         type: 'POST',
-        data: {users:adinviting_users,notif_status:adnot_status,csrfmiddlewaretoken: '{{ csrf_token }}'},
+        data: {users:inviting_users,notif_status:not_status,csrfmiddlewaretoken: '{{ csrf_token }}'},
         beforeSend: function() {
               $("#ajax_load_image").show();
               $("#content").css({"opacity":"0.1",})
@@ -65,25 +67,35 @@ $.ajax({
 }); 
 }
 
-$(document).on('click',"#subscr_admins",function() {
+$(document).on('click',".list_to_invite",function() {
+ $('#admin_colln_set_drawer1').html("");
+ $('#admin_colln_set_drawer2').html("");
+ $('#admin_colln_set_drawer1').html('<li class="price"><input type="text" placeholder="Type here to search users" id="drawer_search" class="margin-0"></li>');
 
- $('#inviteadmins #admin_colln_set_drawer1').html("");
- $('#inviteadmins #admin_colln_set_drawer2').html("");
- $('#inviteadmins #admin_colln_set_drawer1').html('<li class="price"><input type="text" placeholder="Type here to search users" id="admin_colln_set_search" class="margin-0"></li>');
+ avail_classes = $(this).attr('class');
+ if (avail_classes.indexOf("admins") != -1){
+    url="/{{node}}/group/notify/invite_admins/"
+    $(".user_or_admin").val("admins");
+ }
+ if (avail_classes.indexOf("users") != -1){
+    console.log("getting users")
+    url="/{{node}}/group/notify/invite_users/"
+    $(".user_or_admin").val("users");
+  }
 
-var url="/{{node}}/group/notify/invite_admins/"
  $.getJSON( url, function( data ) {
   $.each(data ,function(index , drawer_elements){
    if(index == 0)
     {
      $.each(drawer_elements.drawer1, function(index, element) {
-        $('#inviteadmins #admin_colln_set_drawer1').append("<li id='"+element.id+"' class='bullet-item text-left'>"+element.name+"</li>");
+
+        $('#admin_colln_set_drawer1').append("<li id='"+element.id+"' class='bullet-item text-left'>"+element.name+"</li>");
       });
    }
    if(index == 1)
     {
     $.each(drawer_elements.drawer2, function(index, element) {
-        $('#inviteadmins #admin_colln_set_drawer2').append("<li id='"+element.id+"' class='bullet-item text-left'>"+element.name+"</li>");
+        $('#admin_colln_set_drawer2').append("<li id='"+element.id+"' class='bullet-item text-left'>"+element.name+"</li>");
       });
     }
 
@@ -91,33 +103,72 @@ var url="/{{node}}/group/notify/invite_admins/"
    }); //getjson
 }); //document click
 
-
-
-
-
-function adget_all_data(){
- $.each($('#inviteadmins #admin_colln_set_drawer2 li'),function(index,item){
-         addata_prefs=addata_prefs+String(item.id)+",";
+function get_all_data(){
+ $.each($('#admin_colln_set_drawer2 li'),function(index,item){
+         data_prefs=data_prefs+String(item.id)+",";
          });
 }
+
+$(document).on('click',".close-reveal-modal",function(e){
+   $('#admin_colln_set_drawer1').html("");
+   $('#admin_colln_set_drawer2').html("");
+
+})
+$(document).on('keydown',"#drawer_search",function(e){
+      if (e.keyCode == 8) {
+        // If backspace pressed, then show all
+        search_text_len = 0;
+      }
+      var $li = $("#drawer_search").parents("li").nextAll("li.bullet-item")
+      if(e.keyCode==13){
+        var search_text = (this.value).toLowerCase();
+        var search_text_len = (search_text.length + 1);
+
+      }
+      if (search_text_len>0) {
+        $(".searching").css("display", "block");
+        $li.each(function() {
+          val_chk = $(this).text().toLowerCase().search(search_text)  
+          if (val_chk != -1) {
+            $(this).css("display", "block");
+          }     
+          else{
+            $(this).css("display", "none");
+          }
+        });
+        $(".searching").css("display", "none");
+      }
+      else if (search_text_len == 0) {
+        $li.filter(function() {
+          if ($(this).css("display") == "none") {
+            return true;
+          }
+
+          else {
+            return false;
+          }
+        }).show();
+      }
+
+})
+
 
 
 </script>
 
 <div id="subscr_admins">
-<li><a href="#" data-reveal-id="inviteadmins">Subscribe Admins</a></li>
+<li class="admins list_to_invite"><a href="#" data-reveal-id="invites">Subscribe Admins</a></li>
+<li class="users list_to_invite"><a href="#" data-reveal-id="invites">Subscribe Users</a></li>
 
-<div id="inviteadmins" class="reveal-modal " data-reveal >
+<div id="invites" class="reveal-modal " data-reveal >
      
-     {% blocktrans %}<h2>Select users</h2>{% endblocktrans %}
-      <div id="admin_module_drawer" >
+     {% blocktrans %}<h2>Select Users</h2>{% endblocktrans %}
+      <div id="drawer_div" >
         {% include "ndf/drawer_widget.html" with widget_for="admin_colln_set"  %}
       </div>
-
             {% blocktrans %}<label><input type="checkbox" id="adminchecknotif" value="ON">Send notification mails to all except the group owner</label>{% endblocktrans %}
-              
-      <input type="button" id="#submitUserInvite" class="button small" value="submit" onClick="admininvite()"> 
+      <input type="hidden" class="user_or_admin">
+      <input type="button" id="#submitUserInvite" class="button small" value="submit" onClick="invite_user_or_admin()"> 
      <a class="close-reveal-modal group">{% trans "&#215" %}; </a>
 </div>
 </div>
-
