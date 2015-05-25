@@ -74,7 +74,7 @@
 				<!-- Login button -->
 				<div class="row">
 					<div class="small-2 large-2 small-offset-3 large-offset-3 columns end">
-						<input type="submit" class="button small expand" tabindex= "3" value="{% trans "Login" %}" style="font-size:15px" />
+						<input type="submit" class="login button small expand" tabindex= "3" value="{% trans "Login" %}" style="font-size:15px" />
 					</div>
 				</div>
 
@@ -112,4 +112,12 @@
 		$(this).after("<small class='error'>Please fill valid "+this.name+"</small>");
 	});
 
+{% endblock %}
+{% block script %}
+	{{block.super}}
+
+	$(document).on('click',".login",function(e){
+		username = $("#id_username").val();
+		$("#id_username").val(username.trim())
+	})
 {% endblock %}
