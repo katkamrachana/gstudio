@@ -2320,7 +2320,7 @@ class HistoryManager():
         (b) False - Otherwise
         """
 
-        collection_tuple = (MetaType, GSystemType, GSystem, AttributeType, GAttribute, RelationType, GRelation, Filehive, Buddy)
+        collection_tuple = (MetaType, GSystemType, GSystem, AttributeType, GAttribute, RelationType, GRelation, Filehive, Buddy, Counter)
         file_res = False    # True, if no error/exception occurred
 
         if document_object is not None and \
@@ -3206,6 +3206,123 @@ class Buddy(DjangoDocument):
                 raise RuntimeError(err)
 
 
+@connection.register
+class Counter(DjangoDocument):
+
+    objects = models.Manager()
+    collection_name = 'CourseCounters'
+
+    structure = {
+        '_type': unicode,
+        'auth_id': ObjectId, # Author node's ObjectId
+        'group_id': ObjectId, # CourseEventGroup's ObjectId
+        'user_id': int, # Django user id
+        'course_score': int,
+
+        # Course structure 
+        'modules_completed': int, 
+        'units_completed': int,
+
+        # Quiz  
+        'quizitems_attempted': int,
+        'correct_quizitems_attempted': int,
+        'incorrect_quizitems_attempted': int,
+
+        # Notes 
+        'notes_created': int,
+        'visitors_on_notes': int, # Count of visitors not visits
+        'comments_gained_on_notes': int, # Count of comments not notes
+        'visits_on_others_notes': int, # count of visits not notes
+        'comments_on_others_notes': int, # count of notes not comments
+        'avg_rating_gained_on_notes': float, 
+
+
+        # Files 
+        'files_created': int,
+        'visitors_on_files': int, # Count of visitors not visits
+        'comments_gained_on_files': int, # Count of comments not files
+        'visits_on_others_files': int, # count of visits not files
+        'comments_on_others_files': int, # count of files not comments
+        'avg_rating_gained_on_files': float, 
+
+        # Comments 
+        'comments_created': int, # Count of Comments on Files, Notes and Course Activities
+    }
+
+    indexes = [
+        {
+            # 1: Compound index
+            'fields': [
+                ('_type', INDEX_ASCENDING), ('user_id', INDEX_ASCENDING)
+            ]
+        }, {
+            # 2: Compound index
+            'fields': [
+                ('_type', INDEX_ASCENDING), ('auth_id', INDEX_ASCENDING)
+            ]
+        }, {
+            # 9: Compound index
+            'fields': [
+                ('_type', INDEX_ASCENDING), ('group_id', INDEX_ASCENDING), ('user_id', INDEX_ASCENDING)
+            ]
+        },{
+            # 9: Compound index
+            'fields': [
+                ('_type', INDEX_ASCENDING), ('group_id', INDEX_ASCENDING), ('auth_id', INDEX_ASCENDING)
+            ]
+        },
+
+    ]
+
+    use_dot_notation = True
+    required_fields = ['group_id', 'user_id']
+
+    def save(self, *args, **kwargs):
+
+        is_new = False if ('_id' in self) else True
+
+        super(Counter, self).save(*args, **kwargs)
+
+        # storing Filehive JSON in RSC system:
+        history_manager = HistoryManager()
+        rcs_obj = RCS()
+
+        if is_new:
+
+            # Create history-version-file
+            if history_manager.create_or_replace_json_file(self):
+                fp = history_manager.get_file_path(self)
+                message = "This document of Counter (having group_id: " + str(self.group_id) + " and user id: " + str(self.user_id) + " ) is created on " + str(datetime.datetime.now())
+                rcs_obj.checkin(fp, 1, message.encode('utf-8'), "-i")
+
+        else:
+            # Update history-version-file
+            fp = history_manager.get_file_path(self)
+
+            try:
+                rcs_obj.checkout(fp)
+
+            except Exception as err:
+                try:
+                    if history_manager.create_or_replace_json_file(self):
+                        fp = history_manager.get_file_path(self)
+                        message = "This document of Counter (having group_id: " + str(self.group_id) + " and user id: " + str(self.user_id) + " ) is re-created on " + str(datetime.datetime.now())
+                        rcs_obj.checkin(fp, 1, message.encode('utf-8'), "-i")
+
+                except Exception as err:
+                    print "\n DocumentError: This document (", self._id, ":", str(self.group_id), ") can't be re-created!!!\n"
+                    node_collection.collection.remove({'_id': self._id})
+                    raise RuntimeError(err)
+
+            try:
+                if history_manager.create_or_replace_json_file(self):
+                    message = "This document of Counter (having group_id: " + str(self.group_id) + " and user id: " + str(self.user_id) + " ) is lastly updated on " + str(datetime.datetime.now())
+                    rcs_obj.checkin(fp, 1, message.encode('utf-8'))
+
+            except Exception as err:
+                print "\n DocumentError: This document (", self._id, ":", str(self.group_id), ") can't be updated!!!\n"
+                raise RuntimeError(err)
+
 
 ####################################### Added on 19th June 2014 for SEARCH ##############################
 
@@ -3272,6 +3389,7 @@ triple_collection   = db[Triple.collection_name].Triple
 benchmark_collection= db[Benchmark.collection_name]
 filehive_collection = db[Filehive.collection_name].Filehive
 buddy_collection    = db[Buddy.collection_name].Buddy
+counter_collection    = db[Counter.collection_name].Counter
 
 gridfs_collection   = db["fs.files"]
 chunk_collection    = db["fs.chunks"]

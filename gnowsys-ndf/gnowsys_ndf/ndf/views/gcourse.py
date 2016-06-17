@@ -2544,7 +2544,7 @@ def course_analytics(request, group_id, user_id, render_template=False):
     # print "\n Total Files viewed by User === ", total_files_viewed_by_user, "\n\n"
 
     # TO IMPROVE
-    analytics_data['other_viewing_my_files'] = analytics_instance.total_users_visted_my_files()
+    analytics_data['other_viewing_my_files'] = analytics_instance.total_users_visited_my_files()
     # print "\n Total Users viewing My FILES === ", other_viewing_my_files, "\n\n"
 
     # TO IMPROVE

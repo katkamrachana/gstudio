@@ -9,9 +9,8 @@ benchmark_collection = db[Benchmark.collection_name]
 class AnalyticsMethods(object):
 	print "=== Class Defination === "
 
-	def __init__(self, request, user_id, username, group_id):
+	def __init__(self, user_id, username, group_id):
 		super(AnalyticsMethods, self).__init__()
-		self.request = request
 		self.group_id = group_id
 		self.group_obj = node_collection.one({'_id': ObjectId(self.group_id)})
 		self.user_id = user_id
@@ -151,11 +150,7 @@ class AnalyticsMethods(object):
 		self.quizitem_post_cur = node_collection.find({'member_of': quizitem_post_gst._id,
 		 'group_set': ObjectId(self.group_id), 'created_by': self.user_id},{'_id': 1, 'origin': 1, 'attribute_set': 1})
 		if return_cur_obj:
-			
-			
-
 			return self.quizitem_post_cur
-		
 		
 		if self.quizitem_post_cur:
 			return self.quizitem_post_cur.count()
@@ -192,14 +187,8 @@ class AnalyticsMethods(object):
 													self.list_of_qi_ids.append(each_qi._id)
 								break
 		if correct_ans_flag:
-			
-			
-
 			return len(self.list_of_qi_ids)
 		elif incorrect_ans_flag:
-			
-			
-
 			return (self.total_qi_cur.count()-len(self.list_of_qi_ids))
 		else:
 			return 0
@@ -266,11 +255,7 @@ class AnalyticsMethods(object):
 
 		self.all_comments_on_user_notes = node_collection.find({'member_of': self.reply_gst._id, 'origin': {'$in': list_of_dict_notes}},{'_id': 1, 'created_by': 1})
 		if return_cur_obj:
-			
-			
-
 			return self.all_comments_on_user_notes
-		
 		
 		if self.all_comments_on_user_notes:
 			return self.all_comments_on_user_notes.count()
@@ -360,9 +345,6 @@ class AnalyticsMethods(object):
 
 		self.user_files_cur = node_collection.find(query_user_files_count,{'_id': 1, 'created_by': 1})
 		if return_cur_obj:
-			
-			
-
 			return self.user_files_cur
 		
 		
@@ -395,11 +377,7 @@ class AnalyticsMethods(object):
 			list_of_dict_files.append({'prior_node_id_of_thread': ObjectId(each_user_file_id)})
 		self.all_comments_on_user_files = node_collection.find({'member_of': self.reply_gst._id, 'origin': {'$in': list_of_dict_files}},{'_id': 1, 'created_by': 1})
 		if return_cur_obj:
-			
-			
-
 			return self.all_comments_on_user_files
-		
 		
 		if self.all_comments_on_user_files:
 			return self.all_comments_on_user_files.count()
@@ -522,12 +500,9 @@ class AnalyticsMethods(object):
 				'user':{'$ne': self.username}}).sort('last_update',-1)
 
 			unique_users_read_my_notes = self.calc_unique_users(self.my_notes_read_count)
-		
-		
-
 		return len(unique_users_read_my_notes)
 
-	def total_users_visted_my_files(self):
+	def total_users_visited_my_files(self):
 		
 		unique_users_read_my_files = []
 		if not hasattr(self,"user_files_cur"):
@@ -541,10 +516,6 @@ class AnalyticsMethods(object):
 				'group': unicode(self.group_obj._id), 'calling_url': {'$regex': users_files_ids_str},
 				'user':{'$ne': self.username}}).sort('last_update',-1)
 			unique_users_read_my_files = self.calc_unique_users(self.my_files_read_count)
-
-		
-		
-
 		return len(unique_users_read_my_files)
 
 	def get_other_files_commented_by_user_count(self):
@@ -562,8 +533,7 @@ class AnalyticsMethods(object):
 		files_count = node_collection.find({'member_of': self.file_gst._id,
 		 'group_set': self.group_obj._id, 'created_by': {'$ne': self.user_id},
 		 '_id': {'$in': prior_node_ids}})
-
-		
+	
 		
 		if files_count:
 			return files_count.count()
@@ -587,8 +557,6 @@ class AnalyticsMethods(object):
 		 'member_of': self.page_gst._id, 'group_set': self.group_obj._id, 'created_by': {'$ne': self.user_id},
 		 '_id': {'$in': prior_node_ids}})
 
-		
-		
 		if notes_count:
 			return notes_count.count()
 		else:
@@ -652,8 +620,6 @@ class AnalyticsMethods(object):
 						unique_user_list.append(rdict['user_id'])
 
 				avg_rating_files = int(total_rating/float(cnt))
-		
-		
 		# return avg_rating_files,len(unique_user_list)
 		return avg_rating_files
 
