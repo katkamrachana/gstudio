@@ -1,4 +1,5 @@
 import os
+import os
 import json
 import time
 
@@ -15,10 +16,12 @@ from gnowsys_ndf.settings import *
 def run():
     # import ipdb; ipdb.set_trace()
     # path  = os.path.abspath(os.path.dirname(os.pardir))
-    nodes_path = '/data/gstudio_data_restore/data/rcs-repo/Nodes'
-    triples_path = '/data/gstudio_data_restore/data/rcs-repo/Triples'
-    filehives_path = '/data/gstudio_data_restore/data/rcs-repo/Filehives'
-
+    base_path = str(raw_input('Enter path of group dump: '))
+    group_id_str = base_path.split('/')[-1]
+    nodes_path = base_path + '/data/rcs-repo/Nodes'
+    triples_path = base_path + '/data/rcs-repo/Triples'
+    filehives_path = base_path + '/data/rcs-repo/Filehives'
+    group_id_objId = ObjectId(group_id_str)
     log_file_name = 'data_restore.log'
     if not os.path.exists(GSTUDIO_LOGS_DIR_PATH):
         os.makedirs(GSTUDIO_LOGS_DIR_PATH)
@@ -60,6 +63,7 @@ def run():
                 # raise Exception("demo")
                 try:
                     if path[0] == 'Node':
+                        data['group_set'] = [group_id_objId]
                         # print "\n\n\ndata._id ",data['_id']
                         n = node_collection.find_one({'_id': ObjectId(data['_id'])})
                         if n:
@@ -109,6 +113,8 @@ def run():
                     # In filelds attribute_type/relation_type where ref is to RT and AT nodes.
 
                     if path[0] == 'Triples':
+                        data['group_set'] = [group_id_objId]
+
                         print "\n\n\ndata._id ",data['_id']
                         tr = triple_collection.find_one({'_id': ObjectId(data['_id'])})
                         if tr:
