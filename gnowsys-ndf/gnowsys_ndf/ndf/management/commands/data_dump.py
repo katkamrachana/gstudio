@@ -17,13 +17,13 @@ media_url_found = set()
 historyMgr = HistoryManager()
 # /data/gstudio_data_restore
 restore_rcs_data_path = os.path.join(GSTUDIO_DATA_ROOT, 'gstudio_data_restore')
-restore_media_path = os.path.join(restore_rcs_data_path, 'media')
 
 if not os.path.exists(restore_rcs_data_path):
     os.makedirs(restore_rcs_data_path)
 
-if not os.path.exists(restore_media_path):
-    os.makedirs(restore_media_path)
+
+restore_grp_data_path = None
+restore_media_path = None
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -31,7 +31,17 @@ class Command(BaseCommand):
         group_id = raw_input()
         group_node = node_collection.one({"_type":"Group","_id":ObjectId(group_id)}) 
         if group_node:
+            global restore_grp_data_path
+            restore_grp_data_path = os.path.join(restore_rcs_data_path, group_id)
+            restore_media_path = os.path.join(restore_grp_data_path, 'media')
+
+            if not os.path.exists(restore_grp_data_path):
+                os.makedirs(restore_grp_data_path)
+            if not os.path.exists(restore_media_path):
+                os.makedirs(restore_media_path)
+
             print "\n Initializing Dump of : ", group_node.name
+            print "\n Dump will be located at : ", restore_grp_data_path
             nodes_falling_under_grp = node_collection.find({"group_set":ObjectId(group_node._id)})
             for each_node in nodes_falling_under_grp:
                 node_collection_ids.add(each_node._id)  
@@ -108,9 +118,9 @@ class Command(BaseCommand):
 
 
                 # Copy media file to /data/media location
-                print "*"*90
-                print "\n--- Restoring Filehives Media --- "
-                print "*"*90
+                # print "*"*90
+                # print "\n--- Restoring Filehives Media --- "
+                # print "*"*90
 
                 # for each_file_media_url in filehives_media_urls:   
                 #     # import ipdb;ipdb.set_trace()
@@ -218,7 +228,7 @@ def dump_node_ids(list_of_ids,collection_name):
                     path = historyMgr.get_file_path(each_node_by_id)
                     path = path + ",v"
                     build_rcs.add(path)
-                cp = "cp  -vu " + path + " " +" --parents " + restore_rcs_data_path + "/" 
+                cp = "cp  -vu " + path + " " +" --parents " + restore_grp_data_path + "/" 
                 subprocess.Popen(cp,stderr=subprocess.STDOUT,shell=True)
                 rcs_paths_found.add(path)
 
