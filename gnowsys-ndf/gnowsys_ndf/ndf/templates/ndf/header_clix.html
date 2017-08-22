@@ -7,39 +7,17 @@
   {% get_test_page_oid as help_oid %}
   {% get_gstudio_registration as registration %}
 
-<nav class="top-bar" data-topbar role="navigation" id="menu_bar_gstudio">
-        <ul class="title-area">
-            <li class="name show-for-medium-up">
-                <a class="loggedin-user" href="{% url 'landing_page' %}">
-                
-                <img src="{{site.SECONDARY_LOGO}}">
-                </a>
-            </li>
-            <li class="name hide-for-medium-up">
-                <i class="fi-list side-bar-button"></i>
-                <i class="fi-x close-menu-dropdown hide"></i>
-                <a class="loggedin-user" href="#">
-                    <div></div>
-                </a>
-            </li>
-            <!-- Remove the class "menu-icon" to 
-            get rid of menu icon. Take out "Menu" to just have icon alone -->
-            <li class="toggle-topbar"><a href="#"><i class="icons-large fi-torso"></i>&nbsp;<span class="badge badge-blue">1</span></a></li>
-        </ul>
-
-        <section class="top-bar-section">
-            <!-- Right Nav Section -->
-
-            <ul class="right show-for-medium-up">
-<!--                 <li class=""><a href="#">Blog</a></li>
-                <li class=""><a href="#"><i class="icons-medium fi-info"></i>&nbsp;Help Topics</a></li>
- -->             
-
-                {% if help_oid %}
-                <li class=""><a {% if title == 'Help Page'  %} class="active" {% endif %} target="_blank" href="{% url 'course_content' help_oid %}"> <i class="fa fa-info-circle"></i> Help </a></li>
-                {% endif %}
-                <ul class="">
-          <li class="has-dropdown">
+<nav class="top-bar" data-topbar role="navigation" id="menu_bar_gstudio">       
+    <ul class="title-area">
+        <li class="name show-for-medium-up">
+            <a class="loggedin-user" href="{% url 'landing_page' %}">
+            <img src="{{site.SECONDARY_LOGO}}">
+            </a>
+        </li>
+    </ul>
+    <section class="top-bar-section">
+        <ul>
+        <li class="has-dropdown">
             <a>{% trans "Language" %} &nbsp; | &nbsp; {{request.LANGUAGE_CODE}}</a>
             <ul class="dropdown">
 
@@ -55,118 +33,58 @@
               {% endfor %}
 
             </ul>
-          </li>
-        </ul>
-            {% if user.is_authenticated %}
-                <li class="has-dropdown buddy_margin">
-                    {% get_profile_pic request.user.pk as prof_pic %}
-                    <!-- <a href="{% url 'dashboard' request.user.pk %}"> -->
-                    
-                    {% if prof_pic %}
-                      <img src="{{MEDIA_URL}}{{prof_pic.if_file.original.relurl}}" id="profile-img">
-                      {{ user.username }}
-                    {% else %}
-                            <img class="profile-img" style="background-color:rgba(0, 0, 0, 0.34);" src="/static/ndf/bower_components/foundation-icon-fonts/svgs/fi-torso.svg" >
-                            {{ user.username }}
-                    {% endif %}
-                    <!-- </a> -->
-                                        <ul class="dropdown">
-                        {% if registration %}
-                        <li class="text-center">
-                          <a href="{% url 'auth_password_change' %}">{% trans "Change Password" %}</a>
-                        </li>
-                        {% endif %}
-                        <li>
-                          <a class="logout" href="{% url 'auth_logout' %}">
-                            <i class="fi-power"></i> &nbsp;{% trans "Logout" %}
-                          </a>
-                        </li>
-                    </ul>
-                </li>
-              {% else %}
-                <li>
-                    <a class="" href="{% url 'auth_login' %}" accesskey="l">
-                    <i class="fi-key"></i>&nbsp; {% trans "Login" %}
-                  </a>
-                </li>
-              {% endif %}
-            </ul>
-            <ul class="right hide-for-medium-up dropdown-menu hide">
-                <li class=""><a href="#">My Desk</a></li>
-                <li><a  class="{%if title == 'courses'%}active{%endif%}" href="{% url explore_url %}">Explore </a></li>
-                <li class=""><a href="#"> Blog</a></li>
-                <li class=""><a href="#"><i class="fi-info"></i> Help Topics</a></li>
-                <!--li class="has-dropdown not-click">
-                    <ul class="dropdown">
-                        <!--li class="title back js-generated">
-                            <h5>
-                                <a href="javascript:void(0)">Back</a>
-                            </h5>
-                        </li>
-                        <li class="parent-link hide-for-medium-up">
-                            <a class="parent-link js-generated" href="#">Right Dropdown</a>
-                        </li>
-                        <li><a href="#">First link in dropdown</a></li>
-                        <li class="active"><a href="#">Active link in dropdown</a></li>
-                    </ul>
-                </li-->
-            </ul>
-            {% if user.is_authenticated %}
-            <ul class="right hide-for-medium-up side-bar-menu hide">
-                <li class="">
-                    <a href="{% url 'dashboard' request.user.pk %}">
-                        <i class="icons-medium fi-torso"></i>&nbsp;
-                        <span>LOGGED IN BUDDIES</span>&nbsp;
-                        <span class="badge badge-blue">1</span>
-                    </a>
-                </li>
-                <li class="has-dropdown not-click">
-                    <a href="#">
-                        <img src="{{MEDIA_URL}}{{prof_pic.if_file.original.relurl}}" class="user-profile-pic-small"/>
-                        {{ user.username }}
-                    </a>
-                    <ul class="dropdown">
-                        <li>
-                            <a href="{% url 'auth_password_change' %}">{% trans "Change Password" %}
-                            </a>
-                        </li>
-                        <li>
-                            <a class="logout" href="{% url 'auth_logout' %}">
-                              <i class="fi-power"></i> &nbsp;{% trans "Logout" %}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="" class='add_buddy'>
-                        <center>
-                            <i class="fi-plus round-icon"></i>&nbsp;
-                            <span>Add Buddy</span>
-                        </center>
-                    </a>
-                </li>
-            </ul>
-            {% else %}
-              <ul class="right hide-for-medium-up side-bar-menu hide">
-                <li class="">
-                    <a class="" href="{% url 'auth_login' %}" accesskey="l">
-                    <i class="fi-key"></i>&nbsp; {% trans "Login" %}
-                  </a>
-                </li>
-            </ul>
-            {% endif %}
+        </li>
+    </ul>
 
-            <!-- Left Nav Section -->
-            <ul class="left show-for-medium-up">
-                {% if request.user.id %}
-                <li class=""><a href="{% url 'my_desk' request.user.id %}" {% if title == "my desk" %} class="active" {% endif %}>My Desk</a></li>
-                {% endif %}
-                <li><a href="{% url explore_url %}" {% if title == 'base courses' or title == "courses" or title == "drafts" %} class="active" {% endif %} > Explore</a>
+    {% if request.user.is_authenticated %}
+    <ul class="right hide-for-medium-up side-bar-menu hide">
+        <li class="has-dropdown not-click">
+            <a href="#">
+                <img class="fi-torso" class="user-profile-pic-small"/>
+                {{ request.user.username }}
+            </a>
+            <ul class="dropdown">
+                <li>
+                    <a href="{% url 'auth_password_change' %}">{% trans "Change Password" %}
+                    </a>
                 </li>
-                
+                <li>
+                    <a class="logout" href="{% url 'auth_logout' %}">
+                      <i class="fi-power"></i> &nbsp;{% trans "Logout" %}
+                    </a>
+                </li>
             </ul>
-          </section>
-    </nav>
+        </li>
+    </ul>
+    {% else %}
+        <ul class="right hide-for-medium-up side-bar-menu hide">
+        <li class="">
+            <a class="" href="{% url 'auth_login' %}" accesskey="l">
+            <i class="fi-key"></i>&nbsp; {% trans "Login" %}
+          </a>
+        </li>
+        </ul>
+    {% endif %}
+
+    </section>
+</nav>
+<nav class="top-bar " data-topbar role="navigation" id="menu_bar_gstudio">
+    <section class="top-bar-section">
+        <!-- Right Nav Section -->
+
+        <!-- Left Nav Section -->
+        <ul class="right">
+            {% if request.user.id %}
+            <li class=""><a href="{% url 'my_desk' request.user.id %}" {% if title == "my desk" %} class="active" {% endif %}>My Desk</a></li>
+            {% endif %}
+            <li><a> Treatments</a></li>
+            <li><a> Offers</a></li>
+            <li><a> FAQs</a></li>
+            <li><a> About CDAC</a></li>
+            <li><a> Contact</a></li>
+        </ul>
+    </section>
+</nav>
     <script type="text/javascript">
         // $(document).foundation();
         $(function(){
