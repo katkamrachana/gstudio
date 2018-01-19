@@ -1,3 +1,9 @@
-[submodule "gnowsys-ndf/dlkit_runtime"]
-	path = gnowsys-ndf/dlkit_runtime
+[submodule "gnowsys-ndf/osid/dlkit_runtime"]
+	path = gnowsys-ndf/osid/dlkit_runtime
+	url = https://cjshaw@bitbucket.org/cjshaw/dlkit_runtime.git
+[submodule "gnowsys-ndf/osid/dlkit"]
+	path = gnowsys-ndf/osid/dlkit
+	url = https://cjshaw@bitbucket.org/cjshaw/dlkit_runtime.git
+[submodule "gnowsys-ndf/osid/records"]
+	path = gnowsys-ndf/osid/records
 	url = https://cjshaw@bitbucket.org/cjshaw/dlkit_runtime.git
