@@ -1,0 +1,3 @@
+[submodule "gnowsys-ndf/dlkit_runtime"]
+	path = gnowsys-ndf/dlkit_runtime
+	url = https://cjshaw@bitbucket.org/cjshaw/dlkit_runtime.git
