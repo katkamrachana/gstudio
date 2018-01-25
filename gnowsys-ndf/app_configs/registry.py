@@ -1,116 +1,102 @@
-
+# This file tells dlkit where to find / import each of the different
+# managers from.
 MANAGER_PATHS = {
 
     'service': {
-        'ASSESSMENT': ('dlkit.services.assessment.AssessmentManager',
-                       'dlkit.services.assessment.AssessmentManager'),
-        'ASSESSMENT_AUTHORING': ('dlkit.services.assessment_authoring.AssessmentAuthoringManager',
-                                 'dlkit.services.assessment_authoring.AssessmentAuthoringManager'),
-        'AUTHORIZATION': ('dlkit.services.authorization.AuthorizationManager',
-                          'dlkit.services.authorization.AuthorizationManager'),
-        'REPOSITORY': ('dlkit.services.repository.RepositoryManager',
-                       'dlkit.services.repository.RepositoryManager'),
-        'LEARNING': ('dlkit.services.learning.LearningManager',
-                     'dlkit.services.learning.LearningManager'),
-        'LOGGING': ('dlkit.services.logging_.LoggingManager',
-                    'dlkit.services.logging_.LoggingManager'),
-        'COMMENTING': ('dlkit.services.commenting.CommentingManager',
-                       'dlkit.services.commenting.CommentingManager'),
-        'RESOURCE': ('dlkit.services.resource.ResourceManager',
-                     'dlkit.services.resource.ResourceManager'),
-        'GRADING': ('dlkit.services.grading.GradingManager',
-                    'dlkit.services.grading.GradingManager')
+        'ASSESSMENT': ('osid.dlkit.services.assessment.AssessmentManager',
+                       'osid.dlkit.services.assessment.AssessmentManager'),
+        'ASSESSMENT_AUTHORING': ('osid.dlkit.services.assessment_authoring.AssessmentAuthoringManager',
+                                 'osid.dlkit.services.assessment_authoring.AssessmentAuthoringManager'),
+        'AUTHENTICATION': ('osid.dlkit.services.authentication.AuthenticationManager',
+                           'osid.dlkit.services.authentication.AuthenticationManager'),
+        'AUTHORIZATION': ('osid.dlkit.services.authorization.AuthorizationManager',
+                          'osid.dlkit.services.authorization.AuthorizationManager'),
+        'REPOSITORY': ('osid.dlkit.services.repository.RepositoryManager',
+                       'osid.dlkit.services.repository.RepositoryManager'),
+        'LEARNING': ('osid.dlkit.services.learning.LearningManager',
+                     'osid.dlkit.services.learning.LearningManager'),
+        'LOGGING': ('osid.dlkit.services.logging_.LoggingManager',
+                    'osid.dlkit.services.logging_.LoggingManager'),
+        'CATALOGING': ('osid.dlkit.services.cataloging.CatalogingManager',
+                       'osid.dlkit.services.cataloging.CatalogingManager'),
+        'COMMENTING': ('osid.dlkit.services.commenting.CommentingManager',
+                       'osid.dlkit.services.commenting.CommentingManager'),
+        'RESOURCE': ('osid.dlkit.services.resource.ResourceManager',
+                     'osid.dlkit.services.resource.ResourceManager'),
+        'GRADING': ('osid.dlkit.services.grading.GradingManager',
+                    'osid.dlkit.services.grading.GradingManager'),
+        'TYPE': ('osid.dlkit.services.type.TypeManager',
+                 'osid.dlkit.services.type.TypeManager')
     },
-    'mongo': {
-        'ASSESSMENT': ('dlkit.mongo.assessment.managers.AssessmentManager',
-                       'dlkit.mongo.assessment.managers.AssessmentProxyManager'),
-        'ASSESSMENT_AUTHORING': ('dlkit.mongo.assessment_authoring.managers.AssessmentAuthoringManager',
-                                 'dlkit.mongo.assessment_authoring.managers.AssessmentAuthoringProxyManager'),
-        'AUTHORIZATION': ('dlkit.mongo.authorization.managers.AuthorizationManager',
-                          'dlkit.mongo.authorization.managers.AuthorizationProxyManager'),
-        'REPOSITORY': ('dlkit.mongo.repository.managers.RepositoryManager',
-                       'dlkit.mongo.repository.managers.RepositoryProxyManager'),
-        'LEARNING': ('dlkit.mongo.learning.managers.LearningManager',
-                     'dlkit.mongo.learning.managers.LearningProxyManager'),
-        'LOGGING': ('dlkit.mongo.logging_.managers.LoggingManager',
-                    'dlkit.mongo.logging_.managers.LoggingProxyManager'),
-        'COMMENTING': ('dlkit.mongo.commenting.managers.CommentingManager',
-                       'dlkit.mongo.commenting.managers.CommentingProxyManager'),
-        'RESOURCE': ('dlkit.mongo.resource.managers.ResourceManager',
-                     'dlkit.mongo.resource.managers.ResourceProxyManager'),
-        'GRADING': ('dlkit.mongo.grading.managers.GradingManager',
-                     'dlkit.mongo.grading.managers.GradingProxyManager')
+    'json': {
+        'ASSESSMENT': ('osid.dlkit.json_.assessment.managers.AssessmentManager',
+                       'osid.dlkit.json_.assessment.managers.AssessmentProxyManager'),
+        'ASSESSMENT_AUTHORING': ('osid.dlkit.json_.assessment_authoring.managers.AssessmentAuthoringManager',
+                                 'osid.dlkit.json_.assessment_authoring.managers.AssessmentAuthoringProxyManager'),
+        'AUTHENTICATION': ('osid.dlkit.json_.authentication.managers.AuthenticationManager',
+                           'osid.dlkit.json_.authentication.managers.AuthenticationProxyManager'),
+        'AUTHORIZATION': ('osid.dlkit.json_.authorization.managers.AuthorizationManager',
+                          'osid.dlkit.json_.authorization.managers.AuthorizationProxyManager'),
+        'REPOSITORY': ('osid.dlkit.json_.repository.managers.RepositoryManager',
+                       'osid.dlkit.json_.repository.managers.RepositoryProxyManager'),
+        'LEARNING': ('osid.dlkit.json_.learning.managers.LearningManager',
+                     'osid.dlkit.json_.learning.managers.LearningProxyManager'),
+        'LOGGING': ('osid.dlkit.json_.logging_.managers.LoggingManager',
+                    'osid.dlkit.json_.logging_.managers.LoggingProxyManager'),
+        'CATALOGING': ('osid.dlkit.json_.cataloging.managers.CatalogingManager',
+                       'osid.dlkit.json_.cataloging.managers.CatalogingProxyManager'),
+        'COMMENTING': ('osid.dlkit.json_.commenting.managers.CommentingManager',
+                       'osid.dlkit.json_.commenting.managers.CommentingProxyManager'),
+        'RESOURCE': ('osid.dlkit.json_.resource.managers.ResourceManager',
+                     'osid.dlkit.json_.resource.managers.ResourceProxyManager'),
+        'GRADING': ('osid.dlkit.json_.grading.managers.GradingManager',
+                    'osid.dlkit.json_.grading.managers.GradingProxyManager')
     },
-    'gstudio': {
-        'ASSESSMENT': ('dlkit.mongo.assessment.managers.AssessmentManager',
-                       'dlkit.mongo.assessment.managers.AssessmentProxyManager'),
-        # 'ASSESSMENT_AUTHORING': ('dlkit.mongo.assessment_authoring.managers.AssessmentAuthoringManager',
-        #                          'dlkit.mongo.assessment_authoring.managers.AssessmentAuthoringProxyManager'),
-        'AUTHORIZATION': ('dlkit_gstudio.authorization.managers.AuthorizationManager',
-                          'dlkit_gstudio.authorization.managers.AuthorizationProxyManager'),
-        'REPOSITORY': ('dlkit_gstudio.repository.managers.RepositoryManager',
-                       'dlkit_gstudio.repository.managers.RepositoryProxyManager'),
-        # 'LEARNING': ('dlkit.mongo.learning.managers.LearningManager',
-        #              'dlkit.mongo.learning.managers.LearningProxyManager'),
-        # 'LOGGING': ('dlkit.mongo.logging_.managers.LoggingManager',
-        #             'dlkit.mongo.logging_.managers.LoggingProxyManager'),
-        # 'COMMENTING': ('dlkit.mongo.commenting.managers.CommentingManager',
-        #                'dlkit.mongo.commenting.managers.CommentingProxyManager'),
-        # 'RESOURCE': ('dlkit.mongo.resource.managers.ResourceManager',
-        #              'dlkit.mongo.resource.managers.ResourceProxyManager'),
-        # 'GRADING': ('dlkit.mongo.grading.managers.GradingManager',
-        #              'dlkit.mongo.grading.managers.GradingProxyManager')
-    },
-
     'authz_adapter': {
-        'ASSESSMENT': ('dlkit.authz_adapter.assessment.managers.AssessmentManager',
-                       'dlkit.authz_adapter.assessment.managers.AssessmentProxyManager'),
-        'ASSESSMENT_AUTHORING': ('dlkit.authz_adapter.assessment_authoring.managers.AssessmentAuthoringManager',
-                                 'dlkit.authz_adapter.assessment_authoring.managers.AssessmentAuthoringProxyManager'),
-        'AUTHORIZATION': ('dlkit.authz_adapter.authorization.managers.AuthorizationManager',
-                          'dlkit.authz_adapter.authorization.managers.AuthorizationProxyManager'),
-        'REPOSITORY': ('dlkit.authz_adapter.repository.managers.RepositoryManager',
-                       'dlkit.authz_adapter.repository.managers.RepositoryProxyManager'),
-        # 'REPOSITORY': ('dlkit_gstudio.repository.managers.RepositoryManager',
-        #                'dlkit_gstudio.repository.managers.RepositoryProxyManager'),
-        'LEARNING': ('dlkit.authz_adapter.learning.managers.LearningManager',
-                     'dlkit.authz_adapter.learning.managers.LearningProxyManager'),
-        'LOGGING': ('dlkit.authz_adapter.logging_.managers.LoggingManager',
-                    'dlkit.authz_adapter.logging_.managers.LoggingProxyManager'),
-        'COMMENTING': ('dlkit.authz_adapter.commenting.managers.CommentingManager',
-                       'dlkit.authz_adapter.commenting.managers.CommentingProxyManager'),
-        'RESOURCE': ('dlkit.authz_adapter.resource.managers.ResourceManager',
-                     'dlkit.authz_adapter.resource.managers.ResourceProxyManager'),
-        'GRADING': ('dlkit.authz_adapter.grading.managers.GradingManager',
-                    'dlkit.authz_adapter.grading.managers.GradingProxyManager')
-    },
-    'time_based_authz': {
-        'AUTHORIZATION': ('dlkit.stupid_authz_impls.time_based_authz.AuthorizationManager',
-                          'dlkit.stupid_authz_impls.time_based_authz.AuthorizationProxyManager')
-    },
-    'ask_me_authz': {
-        'AUTHORIZATION': ('dlkit.stupid_authz_impls.ask_me_authz.AuthorizationManager',
-                          'dlkit.stupid_authz_impls.ask_me_authz.AuthorizationProxyManager')
+        'ASSESSMENT': ('osid.dlkit.authz_adapter.assessment.managers.AssessmentManager',
+                       'osid.dlkit.authz_adapter.assessment.managers.AssessmentProxyManager'),
+        'ASSESSMENT_AUTHORING': ('osid.dlkit.authz_adapter.assessment_authoring.managers.AssessmentAuthoringManager',
+                                 'osid.dlkit.authz_adapter.assessment_authoring.managers.AssessmentAuthoringProxyManager'),
+        'AUTHORIZATION': ('osid.dlkit.authz_adapter.authorization.managers.AuthorizationManager',
+                          'osid.dlkit.authz_adapter.authorization.managers.AuthorizationProxyManager'),
+        'REPOSITORY': ('osid.dlkit.authz_adapter.repository.managers.RepositoryManager',
+                       'osid.dlkit.authz_adapter.repository.managers.RepositoryProxyManager'),
+        'LEARNING': ('osid.dlkit.authz_adapter.learning.managers.LearningManager',
+                     'osid.dlkit.authz_adapter.learning.managers.LearningProxyManager'),
+        'LOGGING': ('osid.dlkit.authz_adapter.logging_.managers.LoggingManager',
+                    'osid.dlkit.authz_adapter.logging_.managers.LoggingProxyManager'),
+        'CATALOGING': ('osid.dlkit.authz_adapter.cataloging.managers.CatalogingManager',
+                       'osid.dlkit.authz_adapter.cataloging.managers.CatalogingProxyManager'),
+        'COMMENTING': ('osid.dlkit.authz_adapter.commenting.managers.CommentingManager',
+                       'osid.dlkit.authz_adapter.commenting.managers.CommentingProxyManager'),
+        'RESOURCE': ('osid.dlkit.authz_adapter.resource.managers.ResourceManager',
+                     'osid.dlkit.authz_adapter.resource.managers.ResourceProxyManager'),
+        'GRADING': ('osid.dlkit.authz_adapter.grading.managers.GradingManager',
+                    'osid.dlkit.authz_adapter.grading.managers.GradingProxyManager')
     },
     'handcar': {
-        'LEARNING': ('dlkit.handcar.learning.managers.LearningManager',
-                     'dlkit.handcar.learning.managers.LearningProxyManager')
+        'LEARNING': ('osid.dlkit.handcar.learning.managers.LearningManager',
+                     'osid.dlkit.handcar.learning.managers.LearningProxyManager'),
+        'TYPE': ('osid.dlkit.handcar.type.managers.TypeManager',
+                 'osid.dlkit.handcar.type.managers.TypeManager'),
+        'REPOSITORY': ('osid.dlkit.handcar.repository.managers.RepositoryManager',
+                       'osid.dlkit.handcar.repository.managers.RepositoryProxyManager'),
     },
     'aws_adapter': {
-        'REPOSITORY': ('dlkit.aws_adapter.repository.managers.RepositoryManager',
-                       'dlkit.aws_adapter.repository.managers.RepositoryProxyManager')
+        'REPOSITORY': ('osid.dlkit.aws_adapter.repository.managers.RepositoryManager',
+                       'osid.dlkit.aws_adapter.repository.managers.RepositoryProxyManager')
     },
-    'qbank_authz': {
-        'AUTHORIZATION': ('qbank_authz.authorization.managers.AuthorizationManager',
-                          'qbank_authz.authorization.managers.AuthorizationProxyManager')
+    'filesystem_adapter': {
+        'REPOSITORY': ('osid.dlkit.filesystem_adapter.repository.managers.RepositoryManager',
+                       'osid.dlkit.filesystem_adapter.repository.managers.RepositoryProxyManager')
     },
-    'roles_authz': {
-        'AUTHORIZATION': ('roles_authz.authorization.managers.AuthorizationManager',
-                          'roles_authz.authorization.managers.AuthorizationProxyManager')
+    'always_authz': {
+        'AUTHORIZATION': ('osid.tests.authz_impls.always_authz.AuthorizationManager',
+                          'osid.tests.authz_impls.always_authz.AuthorizationProxyManager')
     },
-    'resource_agent_authz_adapter': {
-        'RESOURCE': ('resource_agent_authz_adapter.managers.ResourceManager',
-                     'resource_agent_authz_adapter.managers.ResourceProxyManager')
+    'never_authz': {
+        'AUTHORIZATION': ('osid.tests.authz_impls.never_authz.AuthorizationManager',
+                          'osid.tests.authz_impls.never_authz.AuthorizationProxyManager')
     },
-}
 
+}
