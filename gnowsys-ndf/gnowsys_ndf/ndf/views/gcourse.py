@@ -2276,10 +2276,10 @@ def course_notebook(request, group_id, node_id=None, tab="my-notes"):
     create_flag = eval(request.GET.get('create', 'False'))
 
     template = 'ndf/gcourse_event_group.html'
-    if 'base_unit' in group_obj.member_of_names_list:
-        template = 'ndf/gevent_base.html'
+    # if 'base_unit' in group_obj.member_of_names_list:
+    #     template = 'ndf/gevent_base.html'
 
-    if 'announced_unit' in group_obj.member_of_names_list or 'Group' in group_obj.member_of_names_list and 'base_unit' not in group_obj.member_of_names_list:
+    if 'announced_unit' in group_obj.member_of_names_list or 'Group' in group_obj.member_of_names_list or 'base_unit'  in group_obj.member_of_names_list:
         template = 'ndf/lms.html'
 
     # page_gst = node_collection.one({'_type': "GSystemType", 'name': "Page"})
@@ -2489,7 +2489,7 @@ def course_raw_material(request, group_id, node_id=None,page_no=1):
         allow_to_upload = True
     template = 'ndf/gcourse_event_group.html'
     
-    if "announced_unit" in group_obj.member_of_names_list or "Group" in group_obj.member_of_names_list:
+    if "announced_unit" in group_obj.member_of_names_list or "Group" in group_obj.member_of_names_list or "base_unit" in group_obj.member_of_names_list :
         template = 'ndf/lms.html'
         # assets_page_info = paginator.Paginator(asset_nodes, page_no, GSTUDIO_NO_OF_OBJS_PP)
         # context_variables.update({'assets_page_info':assets_page_info})
@@ -2577,7 +2577,7 @@ def course_gallery(request, group_id,node_id=None,page_no=1):
     
     template = 'ndf/gcourse_event_group.html'
     
-    if "announced_unit" in group_obj.member_of_names_list or "Group" in group_obj.member_of_names_list and 'base_unit' not in group_obj.member_of_names_list:
+    if "announced_unit" in group_obj.member_of_names_list or "Group" in group_obj.member_of_names_list and 'base_unit' in group_obj.member_of_names_list:
         template = 'ndf/lms.html'
         # assets_page_info = paginator.Paginator(asset_nodes, page_no, GSTUDIO_NO_OF_OBJS_PP)
         # context_variables.update({'assets_page_info':assets_page_info})
