@@ -1,4 +1,4 @@
-from dlkit_runtime import RUNTIME, PROXY_SESSION
+from dlkit.runtime import RUNTIME, PROXY_SESSION
 condition = PROXY_SESSION.get_proxy_condition()
 
 # getting req object
@@ -15,7 +15,7 @@ repository_service_mgr = RUNTIME.get_service_manager('REPOSITORY', proxy=proxy)
 # import ipdb; ipdb.set_trace()
 
 # The following two calls are equivalent:
-rl = repository_service_mgr.get_repository_lookup_session()
+rl = repository_service_mgr.get_repository_lookup_session(proxy=proxy)
 all_repos = rl.get_repositories()
 # is equivalent to:
 all_repos = repository_service_mgr.get_repositories()
@@ -32,7 +32,7 @@ all_repos = repository_service_mgr.get_repositories()
 print "\nTotal repositories: ", all_repos.available()
 test_repo = None
 for each in all_repos:
-	print "\t- ", each.get_display_name()
+	print "\t- ", each.get_display_name().text
 	test_repo = each
 # So now test_repo holds the last repository found in the all_repos iterator.
 
@@ -42,17 +42,17 @@ for each in all_repos:
 # Assets to exist at the system/root level. In other words, Assets must always exist in 
 # Repositories/Groups. So perhaps your Authorization implementation might always return False
 # for is_authorized() calls where the qualifier_id.identifier == "ROOT"
-al = repository_service_mgr.get_asset_lookup_session()
-al.get_assets() # might raise PermissionDenied because is_authorized() returned False
+# al = repository_service_mgr.get_asset_lookup_session(proxy=proxy)
+# al.get_assets() # might raise PermissionDenied because is_authorized() returned False
 # However, if the session is set to use_federated_repository_view(), then the underlying
 # implementation would be expected to return all Assets from Repositories/Groups where
 # the logged-in user is authorized to lookup Assets. We need to talk about this.
 
 # As with the Repository example above, the following two calls are equivalent:
-al_repo = repository_service_mgr.get_asset_lookup_session_for_repository(test_repo.get_repository_id())
-assets = al_repo.get_assets() # Returns all the Assets
+# al_repo = repository_service_mgr.get_asset_lookup_session_for_repository(test_repo.get_repository_id())
+# assets = al_repo.get_assets() # Returns all the Assets
 # is equivalent to:
-test_repo.get_assets() # Returns all the Assets
+# test_repo.get_assets() # Returns all the Assets
 # Again, the latter is supported by the "services" implementation as a developer convenience
 # In this case the Repository itself keeps track of the sessions for you.
 # Since both of these calls are using Repository-bound sessions the authz_adapter will send 
