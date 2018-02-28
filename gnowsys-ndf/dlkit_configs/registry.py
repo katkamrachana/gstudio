@@ -19,7 +19,10 @@ MANAGER_PATHS = {
         'RESOURCE': ('dlkit.services.resource.ResourceManager',
                      'dlkit.services.resource.ResourceManager'),
         'GRADING': ('dlkit.services.grading.GradingManager',
-                    'dlkit.services.grading.GradingManager')
+                    'dlkit.services.grading.GradingManager'),
+        'CATALOGING': ('dlkit.services.cataloging.CatalogingManager',
+                       'dlkit.services.cataloging.CatalogingManager'),
+
     },
     'mongo': {
         'ASSESSMENT': ('dlkit.mongo.assessment.managers.AssessmentManager',
@@ -39,7 +42,10 @@ MANAGER_PATHS = {
         'RESOURCE': ('dlkit.mongo.resource.managers.ResourceManager',
                      'dlkit.mongo.resource.managers.ResourceProxyManager'),
         'GRADING': ('dlkit.mongo.grading.managers.GradingManager',
-                     'dlkit.mongo.grading.managers.GradingProxyManager')
+                     'dlkit.mongo.grading.managers.GradingProxyManager'),
+        'CATALOGING': ('dlkit.mongo.cataloging.managers.CatalogManager',
+               'dlkit.mongo.cataloging.managers.CatalogProxyManager'),
+
     },
     'gstudio': {
         'ASSESSMENT': ('dlkit.mongo.assessment.managers.AssessmentManager',
@@ -50,6 +56,8 @@ MANAGER_PATHS = {
                           'dlkit_gstudio.authorization.managers.AuthorizationProxyManager'),
         'REPOSITORY': ('dlkit_gstudio.repository.managers.RepositoryManager',
                        'dlkit_gstudio.repository.managers.RepositoryProxyManager'),
+        'CATALOGING': ('dlkit_gstudio.cataloging.managers.CatalogManager',
+                       'dlkit_gstudio.cataloging.managers.CatalogProxyManager'),
         # 'LEARNING': ('dlkit.mongo.learning.managers.LearningManager',
         #              'dlkit.mongo.learning.managers.LearningProxyManager'),
         # 'LOGGING': ('dlkit.mongo.logging_.managers.LoggingManager',
@@ -71,6 +79,8 @@ MANAGER_PATHS = {
                           'dlkit.authz_adapter.authorization.managers.AuthorizationProxyManager'),
         'REPOSITORY': ('dlkit.authz_adapter.repository.managers.RepositoryManager',
                        'dlkit.authz_adapter.repository.managers.RepositoryProxyManager'),
+        'CATALOGING': ('dlkit.authz_adapter.cataloging.managers.CatalogManager',
+                       'dlkit.authz_adapter.cataloging.managers.CatalogProxyManager'),
         # 'REPOSITORY': ('dlkit_gstudio.repository.managers.RepositoryManager',
         #                'dlkit_gstudio.repository.managers.RepositoryProxyManager'),
         'LEARNING': ('dlkit.authz_adapter.learning.managers.LearningManager',
