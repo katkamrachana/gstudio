@@ -1,4 +1,4 @@
-from dlkit_runtime import RUNTIME, PROXY_SESSION
+from dlkit.runtime import RUNTIME, PROXY_SESSION
 condition = PROXY_SESSION.get_proxy_condition()
 
 # getting req object

@@ -115,13 +115,13 @@ class CreateGroup(object):
         elif self.request:
             altnames = self.request.POST.get('altnames', name).strip()
 
-        group_set = []
-        if kwargs.get('group_set', ''):
-            group_set = kwargs.get('group_set', [])
-        else:
-            group_set = self.request.POST.get('group_set', [])
-        group_set = [group_set] if not isinstance(group_set, list) else group_set
-        group_set = [ObjectId(g) for g in group_set]
+        # group_set = []
+        # if kwargs.get('group_set', ''):
+        #     group_set = kwargs.get('group_set', [])
+        # else:
+        #     group_set = self.request.POST.get('group_set', [])
+        # group_set = [group_set] if not isinstance(group_set, list) else group_set
+        # group_set = [ObjectId(g) for g in group_set]
 
         member_of = []
         if kwargs.get('member_of', ''):

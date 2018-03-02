@@ -108,6 +108,8 @@ class CatalogForm(abc_cataloging_objects.CatalogForm, osid_objects.OsidCatalogFo
     # __metaclass__ = abc.ABCMeta
     _namespace = 'cataloging.Catalog'
 
+
+
     def __init__(self, **kwargs):
         osid_objects.OsidCatalogForm.__init__(self, object_name='CATALOG', **kwargs)
         self._mdata = default_mdata.get_catalog_mdata()
@@ -117,7 +119,6 @@ class CatalogForm(abc_cataloging_objects.CatalogForm, osid_objects.OsidCatalogFo
         if not self.is_for_update():
             self._init_map(**kwargs)
             self._init_gstudio_map(**kwargs)
-
 
     def _init_map(self, record_types=None, **kwargs):
         """Initialize form map"""
@@ -129,8 +130,8 @@ class CatalogForm(abc_cataloging_objects.CatalogForm, osid_objects.OsidCatalogFo
 
 
     def _init_form(self, record_types=None, **kwargs):
-        """Initialize form map"""
-        osid_objects.OsidCatalogForm.__init__(self, **kwargs)
+        """Initialize form elements"""
+        osid_objects.OsidObjectForm._init_form(self, **kwargs)
 
 
     # @abc.abstractmethod

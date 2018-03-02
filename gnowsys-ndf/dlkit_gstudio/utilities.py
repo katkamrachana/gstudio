@@ -176,7 +176,7 @@ def get_provider_manager(osid, runtime=None, proxy=None, local=False):
             mgr_str = 'Manager'
         else:
             mgr_str = 'ProxyManager'
-        module = import_module('dlkit.mongo.' + osid.lower() + '.managers')
+        module = import_module('dlkit.json_.' + osid.lower() + '.managers')
         manager_name = ''.join((osid.title()).split('_')) + mgr_str
         manager = getattr(module, manager_name)()
     except (ImportError, AttributeError):
@@ -294,7 +294,7 @@ def get_locale_with_proxy(proxy):
     without constructor arguments wlll return the default Locale.
 
     """
-    from dlkit.mongo.locale.objects import Locale
+    from dlkit.json_.locale.objects import Locale
     if proxy is not None:
             locale = proxy.get_locale()
             if locale is not None:
