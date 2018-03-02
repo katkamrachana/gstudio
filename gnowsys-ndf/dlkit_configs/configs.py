@@ -329,6 +329,14 @@ AUTHZ_ADAPTER_1 = {
                 {'value': 'MONGO_1', 'priority': 1}
             ]
         },
+        'catalogingProviderImpl': {
+            'syntax': 'STRING',
+            'displayName': 'Cataloging Provider Implementation',
+            'description': 'Implementation for cataloging service provider',
+            'values': [
+                {'value': 'GSTUDIO_1', 'priority': 1}
+            ]
+        },
         'repositoryProviderImpl': {
             'syntax': 'STRING',
             'displayName': 'Repository Provider Implementation',
@@ -400,6 +408,14 @@ AUTHZ_ADAPTER_2 = {
             'description': 'Implementation for learning service provider',
             'values': [
                 {'value': 'MONGO_1', 'priority': 1}
+            ]
+        },
+        'catalogingProviderImpl': {
+            'syntax': 'STRING',
+            'displayName': 'Cataloging Provider Implementation',
+            'description': 'Implementation for cataloging service provider',
+            'values': [
+                {'value': 'AWS_ADAPTER_1', 'priority': 1}
             ]
         },
         'repositoryProviderImpl': {
@@ -474,6 +490,14 @@ SERVICE = {
             'description': 'Implementation for learning service provider',
             'values': [
                 {'value': 'MONGO_1', 'priority': 1}
+            ]
+        },
+        'catalogingProviderImpl': {
+            'syntax': 'STRING',
+            'displayName': 'Cataloging Provider Implementation',
+            'description': 'Implementation for cataloging service provider',
+            'values': [
+                {'value': 'GSTUDIO_1', 'priority': 1}
             ]
         },
         'repositoryProviderImpl': {
