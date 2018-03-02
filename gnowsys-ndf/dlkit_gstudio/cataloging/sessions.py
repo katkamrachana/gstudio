@@ -227,7 +227,7 @@ class CatalogAssignmentSession:
     operate on it.
 
     """
-    __metaclass__ = abc.ABCMeta
+    # __metaclass__ = abc.ABCMeta
 
     # @abc.abstractmethod
     def can_assign_catalogs(self):
@@ -320,7 +320,7 @@ class CatalogEntryNotificationSession:
     object use ``CatalogNotificationSession``.
 
     """
-    __metaclass__ = abc.ABCMeta
+    # __metaclass__ = abc.ABCMeta
 
     # @abc.abstractmethod
     def get_catalog_id(self):
@@ -764,7 +764,7 @@ class CatalogQuerySession:
     record types. The query record is accessed via the ``CatalogQuery``.
 
     """
-    __metaclass__ = abc.ABCMeta
+    # __metaclass__ = abc.ABCMeta
 
     # @abc.abstractmethod
     def can_search_catalogs(self):
@@ -842,7 +842,7 @@ class CatalogSearchSession:
     record types. The query record is accessed via the ``CatalogQuery``.
 
     """
-    __metaclass__ = abc.ABCMeta
+    # __metaclass__ = abc.ABCMeta
 
     # @abc.abstractmethod
     def get_catalog_search(self):
@@ -916,7 +916,7 @@ class CatalogSearchSession:
         return  # osid.cataloging.CatalogQuery
 
 
-class CatalogAdminSession(abc_catalog_sessions.CatalogAdminSession, osid_sessions.OsidSession):
+class CatalogAdminSession(abc_cataloging_sessions.CatalogAdminSession, osid_sessions.OsidSession):
     """This session creates, updates, and deletes ``Catalogs``.
 
     The data for create and update is provided by the consumer via the
@@ -1252,7 +1252,7 @@ class CatalogNotificationSession:
     available from the notification session for catalog entries.
 
     """
-    __metaclass__ = abc.ABCMeta
+    # __metaclass__ = abc.ABCMeta
 
     # @abc.abstractmethod
     def can_register_for_catalog_notifications(self):
@@ -1491,7 +1491,7 @@ class CatalogNotificationSession:
         pass
 
 
-class CatalogHierarchySession(abc_catalog_sessions.CatalogHierarchySession, osid_sessions.OsidSession):
+class CatalogHierarchySession(abc_cataloging_sessions.CatalogHierarchySession, osid_sessions.OsidSession):
     """This session defines methods for traversing a hierarchy of ``Catalog`` objects.
 
     Each node in the hierarchy is a unique ``Catalog``. The hierarchy
@@ -1911,7 +1911,7 @@ class CatalogHierarchyDesignSession:
     the federation.
 
     """
-    __metaclass__ = abc.ABCMeta
+    # __metaclass__ = abc.ABCMeta
 
     # @abc.abstractmethod
     def get_catalog_hierarchy_id(self):

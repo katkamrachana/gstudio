@@ -22,7 +22,7 @@ from bson import ObjectId
 
 from . import default_mdata
 from .. import utilities
-from dlkit.abstract_osid.repository import objects as abc_repository_objects
+from dlkit.abstract_osid.cataloging import objects as abc_cataloging_objects
 from ..osid import markers as osid_markers
 from ..osid import objects as osid_objects
 from ..osid.metadata import Metadata
@@ -43,7 +43,7 @@ DEFAULT_SCRIPT_TYPE = Type(**Script().get_type_data('DEFAULT'))
 DEFAULT_FORMAT_TYPE = Type(**Format().get_type_data('DEFAULT'))
 
 
-class Catalog(abc_catalog_objects.Catalog, osid_objects.OsidCatalog):
+class Catalog(abc_cataloging_objects.Catalog, osid_objects.OsidCatalog):
     """A ``Catalog`` represents a collection of entries.
 
     Like all OSID objects, a ``Catalog`` is identified by its ``Id`` and
@@ -95,7 +95,7 @@ class Catalog(abc_catalog_objects.Catalog, osid_objects.OsidCatalog):
         return obj_map
 
 
-class CatalogForm(abc_catalog_objects.CatalogForm, osid_objects.OsidCatalogForm):
+class CatalogForm(abc_cataloging_objects.CatalogForm, osid_objects.OsidCatalogForm):
     """This is the form for creating and updating ``Catalogs``.
 
     Like all ``OsidForm`` objects, various data elements may be set here
@@ -151,7 +151,7 @@ class CatalogForm(abc_catalog_objects.CatalogForm, osid_objects.OsidCatalogForm)
         return  # osid.cataloging.records.CatalogFormRecord
 
 
-class CatalogList(abc_catalog_objects.CatalogList, osid_objects.OsidList):
+class CatalogList(abc_cataloging_objects.CatalogList, osid_objects.OsidList):
     """Like all ``OsidLists,``  ``CatalogList`` provides a means for accessing ``Catalog`` elements sequentially either one at a time or many at a time.
 
     Examples: while (cl.hasNext()) { Catalog catalog =
@@ -201,7 +201,7 @@ class CatalogList(abc_catalog_objects.CatalogList, osid_objects.OsidList):
 
 
 
-class CatalogNode(abc_catalog_objects.CatalogNode, osid_objects.OsidNode):
+class CatalogNode(abc_cataloging_objects.CatalogNode, osid_objects.OsidNode):
     """This interface is a container for a partial hierarchy retrieval.
 
     The number of hierarchy levels traversable through this interface
@@ -270,7 +270,7 @@ class CatalogNode(abc_catalog_objects.CatalogNode, osid_objects.OsidNode):
     child_catalog_nodes = property(fget=get_child_catalog_nodes)
 
 
-class CatalogNodeList(abc_catalog_objects.CatalogNodeList, osid_objects.OsidList):
+class CatalogNodeList(abc_cataloging_objects.CatalogNodeList, osid_objects.OsidList):
     """Like all ``OsidLists,``  ``CatalogNodeList`` provides a means for accessing ``CatalogNode`` elements sequentially either one at a time or many at a time.
 
     Examples: while (cnl.hasNext()) { CatalogNode node =
